@@ -1,3 +1,6 @@
 !.gitignore 				(ne pas ignorer le .gitignore)
 .~lock.* 				(ignorer les fichiers temporaires libreoffice)
+<<<<<<< HEAD
 .*node_modules (ignorer les modules nodeJs)
+=======
+>>>>>>> 526b22e83bb6c7d6e1e0f9d4cc5820b17c0c4ff4
