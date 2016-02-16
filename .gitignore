@@ -1,0 +1,3 @@
+!.gitignore 				(ne pas ignorer le .gitignore)
+.~lock.* 				(ignorer les fichiers temporaires libreoffice)
+.*node_modules (ignorer les modules nodeJs)
