@@ -64,3 +64,11 @@ To https://github.com/HighX97/TER_FriendlyTrain
 
 
 /// pour poucher un fichier et le partager
+>git branch
+* cmouhali
+  lortole
+  master
+
+  >git add -A
+  >git commit
+  >git push
