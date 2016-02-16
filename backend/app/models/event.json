@@ -1,0 +1,85 @@
+{
+  "dayName" : 'Mardi',
+  "timeBegin" : "19:15",
+  "timeEnd" : "21:15"
+},
+{
+  "dayName" : 'Jeudi',
+  "timeBegin" : "18:00",
+  "timeEnd" : "20:00"
+}
+
+{
+  "idEveant" : 1,
+  "nameEvent" : "Taekwendo",
+  "date" : "16-02-2016",
+  "timeBegin" : "19:15",
+  "timeEnd" : "21:15",
+  "state" : "generated"
+},
+{
+  "idEvent" : 2,
+  "nameEvent" : "Taekwendo",
+  "date" : "18-02-2016",
+  "timeBegin" : "18:00",
+  "timeEnd" : "20:00",
+  "state" : "generated"
+},
+{
+  "idEvent" : 3,
+  "nameEvent" : "Taekwendo",
+  "date" : "23-02-2016",
+  "timeBegin" : "19:15",
+  "timeEnd" : "21:15",
+  "state" : "generated"
+},
+{
+  "idEvent" : "Taekwendo",
+  "nameEvent" : 4,
+  "date" : "25-02-2016",
+  "timeBegin" : "18:00",
+  "timeEnd" : "20:00",
+  "state" : "generated"
+}
+
+db.activity.insert({"idActivity": 1,"nameActivity": 'taekwendo',"shortDescriptionActivity": 'shortDescriptionActivity_taekwendo',"fullDescriptionActivity": 'fullDescriptionActivity_taekwendo',"dateTimeCreation": '42416',"dateTimeUpdate": '42416',"dateFirst": '42416',"dateLast": '42425',"frequency": [{
+  "dayName" : 'Mardi',
+  "timeBegin" : "19:15",
+  "timeEnd" : "21:15"
+},
+{
+  "dayName" : 'Jeudi',
+  "timeBegin" : "18:00",
+  "timeEnd" : "20:00"
+}],"listEvent": [{
+  "idEvent" : 1,
+  "nameEvent" : "Taekwendo",
+  "date" : "16-02-2016",
+  "timeBegin" : "19:15",
+  "timeEnd" : "21:15",
+  "state" : "generated"
+},
+{
+  "idEvent" : 2,
+  "nameEvent" : "Taekwendo",
+  "date" : "18-02-2016",
+  "timeBegin" : "18:00",
+  "timeEnd" : "20:00",
+  "state" : "generated"
+},
+{
+  "idEvent" : 3,
+  "nameEvent" : "Taekwendo",
+  "date" : "23-02-2016",
+  "timeBegin" : "19:15",
+  "timeEnd" : "21:15",
+  "state" : "generated"
+},
+{
+  "idEvent" : "Taekwendo",
+  "nameEvent" : 4,
+  "date" : "25-02-2016",
+  "timeBegin" : "18:00",
+  "timeEnd" : "20:00",
+  "state" : "generated"
+}]})
