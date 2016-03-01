@@ -8,7 +8,7 @@ var config = require('./config'); // get our config file
 var User   = require('../app/models/user');
 var UserController   = require('../app/controllers/user');
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8081;
 mongoose.connect(config.database); // connect to database
 //app.set('superSecret', config.secret);
 
