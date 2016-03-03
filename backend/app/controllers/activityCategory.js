@@ -57,41 +57,60 @@ moduleRoutes.post('/createActivityCategory', function(req, res) {
         && req.body.level != "" ){
         validationResponse.addError("Invalid lastName: " + req.body.level);
     }
+    // validation idParent
+    if(! ( HelperValidator.isNumeric( req.body.idParent ) && req.body.idParent >= 0 )  ){
+      validationResponse.addError("Invalid categoy idParent: " + req.body.idParent);
+    }
     if(! validationResponse.success){
         res.json(validationResponse);
     }
     else {
-        ActivityCategory.findOne({ label: req.body.label }).
-            select('idActivityCategory, label').
-            exec( function(err, activityCategory){
+        ActivityCategory.findOne({ idActivityCategory: req.body.idParent
+        }, function (err, activityCategoryParent) {
+          if (err) throw err;
+
+          console.log(activityCategoryParent);
+
+          if (! activityCategoryParent && req.body.idParent > 0) {
+          res.json({ success: false, message: 'Category Parent not found.' + req.body.idParent, data: [] });
+        }
+        else {
+                ActivityCategory.findOne({ label: req.body.label }).
+                select('idActivityCategory, label').
+                exec( function(err, activityCategory){
                 if (err) throw err;
 
                 if (!activityCategory){
-                    //Email no
-                    var dataActivityCategory = new ActivityCategory({
-                        //idactivityCategory: req.body.idactivityCategory,
-                        label: req.body.label,
-                        shortDescription: req.body.shortDescription,
-                        //idParent: req.body.idParent,
-                        level: req.body.level,
-                        createDate: Date(),
-                        updateDate: Date()
-                    });
-                    dataActivityCategory.save(function(err) {
-                        if (err) throw err;
+                console.log("activityCategoryParent: ");
+                console.log(activityCategoryParent);
+                var idParent = null;
+                var level = 1;
+                if (activityCategoryParent){//Found
+                    idParent = activityCategoryParent._id;
+                    level = activityCategoryParent.level + 1;
+                }
+                var dataCategory = new ActivityCategory({
+            			idParent: idParent,
+            			label: req.body.label,
+            			level: level,
+            			createDate: Date(),
+            			updateDate: Date()
+            		});
+            		dataCategory.save(function(err) {
+            			if (err) throw err;
 
-                        var msgResponse = 'activityCategory saved successfully';
-                        console.log(msgResponse);
-                        res.json({ success: true, message: msgResponse, data: dataActivityCategory });
-                    });
+            			var msgResponse = 'Category saved successfully';
+            			console.log(msgResponse);
+            			res.json({ success: true, message: msgResponse, data: dataCategory });
+            		});
                 }
                 else{
                     res.json({ success: false, message: 'Label (' + req.body.label + ') Already Exists ', data: [] });
                 }
             });
-    }
-
-});
+          }});
+        }
+    });
 
 //READ
 
@@ -183,6 +202,14 @@ moduleRoutes.post('/updateActivityCategory', function(req, res) {
                 }
                 else if (activityCategory) {
 
+                    ActivityCategory.findOne({ label: req.body.label }).
+                    select('idActivityCategory, label').
+                    exec( function(err, activityCategory){
+                    if (err) throw err;
+
+                    if (!activityCategory){
+
+
                     var queryWhere = { idActivityCategory: req.body.idActivityCategory };
                     var updateFields = {
                       //idactivityCategory: req.body.idactivityCategory,
@@ -206,8 +233,13 @@ moduleRoutes.post('/updateActivityCategory', function(req, res) {
                         }
                     );
                 }
+                else {
+                  res.json({ success: false, message: 'Label (' + req.body.label + ') Already Exists ', data: [] });
+                }
             });
-    }
+          }
+    });
+}
 });
 
 //DELETE
