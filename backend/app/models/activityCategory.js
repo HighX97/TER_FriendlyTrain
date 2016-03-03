@@ -19,5 +19,8 @@ var ActivityCategorySchema = new Schema({
     updateDate : Date
 });
 
-activityCategorySchema.plugin(autoIncrement.plugin, { model: 'activities', field: 'idActivityCategory' });
-var activityCategoryModel = Model = mongoose.model('activityCategory', activityCategorySchema);
+ActivityCategorySchema.plugin(autoIncrement.plugin, { model: 'activityCategories', field: 'idActivityCategory' });
+var ActivityCategoryModel = Model = mongoose.model('activityCategory', ActivityCategorySchema);
+
+// ***** Exports
+module.exports = ActivityCategoryModel;

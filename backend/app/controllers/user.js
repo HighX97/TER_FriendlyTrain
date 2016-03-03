@@ -7,10 +7,10 @@ var moduleRoutes = express.Router();
 
 //Models:
 var User   = require('../models/user');
-var authenticationHelper   = require('../helpers/authentication');
 
 //Helpers:
 var commonHelper   = require('../helpers/common');
+var authenticationHelper   = require('../helpers/authentication');
 
 
 // ***** Methods
@@ -67,7 +67,7 @@ moduleRoutes.post('/createUser', function(req, res) {
     //Not accept ï or é
     //change isAscii by a better fonction
     if(! HelperValidator.isAscii( req.body.firstName )
-        && req.body.lastName != "" ){
+        && req.body.firstName != "" ){
         validationResponse.addError("Invalid firstName: " + req.body.firstName);
     }
     if(! HelperValidator.isAscii( req.body.lastName)
