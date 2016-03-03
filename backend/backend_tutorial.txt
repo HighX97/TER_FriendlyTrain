@@ -54,17 +54,17 @@ cd TER_FriendlyTrain/backend
 sudo nodejs server/server_web.js
 
 Terminal 2
-Start app server
-cd TER_FriendlyTrain/backend
-sudo nodejs server/server_app.js
-
-Terminal 3
 Start mongodb server
 cd TER_FriendlyTrain/backend
 rm -r server/srvMongoDB/
 mkdir server/srvMongoDB
 sudo service mongodb stop
 mongod -dbpath server/srvMongoDB/
+
+Terminal 3
+Start app server
+cd TER_FriendlyTrain/backend
+sudo nodejs server/server_app.js
 
 03_VIEW_ENVIRONNEMENT
 

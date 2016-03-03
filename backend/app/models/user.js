@@ -20,11 +20,11 @@ var UserSchema = new Schema({
     address: String,
     image: String,
     phone: String,
-    friends : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }]
-    friendsRequests : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }]
-    notifications : [ { notificationId: { type: Schema.Types.ObjectId, ref: 'Notification' }, state: { type: Number }] // {0:"unRead",1:"read",2:"hide"}
+    friends : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }}],
+    friendsRequests : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }}],
+    notifications : [ { notificationId: { type: Schema.Types.ObjectId, ref: 'Notification' }, state: { type: Number }}], // {0:"unRead",1:"read",2:"hide"}
     createDate: Date,
-    updateDate : Date
+    updateDate : Date,
     lastLoginDate : Date
 });
 

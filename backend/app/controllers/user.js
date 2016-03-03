@@ -17,27 +17,30 @@ var commonHelper   = require('../helpers/common');
 
 //NONE
 //http://localhost:8081/user/
+//Valide
 moduleRoutes.get('/', function(req, res) {
-    res.json({ success: false, message: 'Invalid User action', data: req.decoded });
+    res.json({ success: true, message: 'NONE User action', data: req.decoded });
 });
 
 //CREATE
 
 //Create default user
 //http://localhost:8081/user/setup
+//Valide
 moduleRoutes.get('/setup', function(req, res) {
    var dataUser = new User({
         //idUser: 1,
-        firstName: 'Jimmy',
-        lastName: 'MUNOZ',
-        email: 'myappeu@gmail.com',
+        firstName: 'FriendlyTrain',
+        lastName: 'TER M1',
+        email: 'firendlytrain@term1um.com',
         password: '1234567',
-        address: '345, Rue des Azalées',
-        image: 'images/user/jimmy.png',
-        phone: ' +33 988765432',
+        address: '2 Place Eugène Bataillon, 34090 Montpellier',
+        image: 'images/user/FriendlyTrain.png',
+        phone: '+33 695504940',
         rol: 'admin',
-        creationDate: Date('2014-04-30T14:00:00.000Z'),
-        updateDate: Date('2014-04-30T14:00:00.000Z')
+        createDate: Date('2016-01-18T14:00:00.000Z'),
+        updateDate: Date('2016-01-18T14:00:00.000Z'),
+        lastLoginDate: Date('2016-01-18T14:00:00.000Z')
     });
     dataUser.save(function(err) {
         if (err) throw err;
@@ -57,10 +60,12 @@ moduleRoutes.post('/createUser', function(req, res) {
     var arrRols = commonHelper.getDataByKey('rol');
     var email = (req.body.email == undefined)? "": req.body.email;
     email = email.toLowerCase();
-
     if(! HelperValidator.isEmail( email) ){
         validationResponse.addError("Invalid email: " + email);
     }
+    //isAscii(str) - check if the string contains ASCII chars only.
+    //Not accept ï or é
+    //change isAscii by a better fonction
     if(! HelperValidator.isAscii( req.body.firstName )
         && req.body.lastName != "" ){
         validationResponse.addError("Invalid firstName: " + req.body.firstName);
@@ -105,8 +110,9 @@ moduleRoutes.post('/createUser', function(req, res) {
                         //image: req.body.image,
                         phone: req.body.phone,
                         rol: req.body.rol,
-                        InscriptionDate: Date(),
-                        updateDate: Date()
+                        createDate: Date(),
+                        updateDate: Date(),
+                        lastLoginDate: Date()
                     });
                     dataUser.save(function(err) {
                         if (err) throw err;
@@ -126,49 +132,9 @@ moduleRoutes.post('/createUser', function(req, res) {
 
 //READ
 
-//Get default user
-//http://localhost:8081/user/getDefaultUser
-moduleRoutes.get('/getDefaultUser', function(req, res) {
-    var validationResponse = commonHelper.getValidationResponse();
-    var HelperValidator = commonHelper.validator;
-
-    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
-    var user = authenticationHelper.getUserByToken(token);
-
-    console.log("user: ");
-    console.log(user);
-
-    if(! ( HelperValidator.isNumeric( user.idUser ) )  ){
-        validationResponse.addError("User not found (" + user.idUser + ") - Login required");
-    }
-
-    if(! validationResponse.success){
-        res.json(validationResponse);
-    }
-    else {
-        User.findOne({ idUser: user.idUser }).
-            sort('-idUser').
-            select('idUser firstName lastName email address image phone rol InscriptionDate updateDate ').
-            exec(function(err, user) {
-            if (err) throw err;
-
-            if (!user) {
-                res.json({ success: false, message: 'User not found.', data: [] });
-            }
-            else if (user) {
-                    res.json({
-                    success: true,
-                    message: 'User Found',
-                    data: user
-                });
-            }
-        });
-    }
-
-});
-
 //Get user
 //http://localhost:8081/user/getUser?idUser=1
+//Valide
 moduleRoutes.get('/getUser', function(req, res) {
     var validationResponse = commonHelper.getValidationResponse();
     var HelperValidator = commonHelper.validator;
@@ -188,7 +154,7 @@ moduleRoutes.get('/getUser', function(req, res) {
             //where('idUser').in(['idUser', req.query.idUser]).// like
             //limit(10).
             sort('-idUser').
-            select('idUser firstName lastName email address image phone rol InscriptionDate updateDate ').
+            select('idUser firstName lastName email address image phone rol createDate updateDate lastLoginDate').
             exec(function(err, user) {
             if (err) throw err;
 
@@ -206,14 +172,56 @@ moduleRoutes.get('/getUser', function(req, res) {
     }
 });
 
+//Get current user
+//http://localhost:8081/user/getCurrentUser
+moduleRoutes.get('/getCurrentUser', function(req, res) {
+    var validationResponse = commonHelper.getValidationResponse();
+    var HelperValidator = commonHelper.validator;
+
+    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+    var user = authenticationHelper.getUserByToken(token);
+
+    console.log("user: ");
+    console.log(user);
+
+    if(! ( HelperValidator.isNumeric( user.idUser ) )  ){
+        validationResponse.addError("User not found (" + user.idUser + ") - Login required");
+    }
+
+    if(! validationResponse.success){
+        res.json(validationResponse);
+    }
+    else {
+        User.findOne({ idUser: user.idUser }).
+            sort('-idUser').
+            select('idUser firstName lastName email address image phone rol createDate updateDate lastLoginDate ').
+            exec(function(err, user) {
+            if (err) throw err;
+
+            if (!user) {
+                res.json({ success: false, message: 'User not found.', data: [] });
+            }
+            else if (user) {
+                    res.json({
+                    success: true,
+                    message: 'User Found',
+                    data: user
+                });
+            }
+        });
+    }
+
+});
+
 //Get specific user list
 //http://localhost:8081/user/getUsersList
 moduleRoutes.get('/getUsersList', function(req, res) {
 });
 
 //Get all user
-//http://localhost:8081/user/getUsersList
-moduleRoutes.get('/getUsersList', function(req, res) {
+//http://localhost:8081/user/getAllUsers
+//Valide
+moduleRoutes.get('/getAllUsers', function(req, res) {
     var validationResponse = commonHelper.getValidationResponse();
     var HelperValidator = commonHelper.validator;
 
@@ -223,7 +231,7 @@ moduleRoutes.get('/getUsersList', function(req, res) {
     //where('idCategory').in(['idCategory', req.query.idCategory]).// like
     //limit(10).
     sort('-idCategory').
-    select('idUser firstName lastName email password address image phone rol InscriptionDate updateDate ').
+    select('idUser firstName lastName email password address image phone rol createDate updateDate lastLoginDate').
     exec(function(err, Users) {
         res.json({ success: true, message: 'User List:', data: Users });
     });
@@ -231,7 +239,8 @@ moduleRoutes.get('/getUsersList', function(req, res) {
 
 //UPDATE
 
-//http://localhost:8888/user/updateUser?idUser=1
+//http://localhost:8081/user/updateUser?idUser=1
+//Valide
 moduleRoutes.post('/updateUser', function(req, res) {
     var validationResponse = commonHelper.getValidationResponse();
     var HelperValidator = commonHelper.validator;
@@ -252,8 +261,8 @@ moduleRoutes.post('/updateUser', function(req, res) {
         && req.body.lastName != "" ){
         validationResponse.addError("Invalid firstName: " + req.body.firstName);
     }
-    if(! HelperValidator.isAscii( req.body.lastName)
-        && req.body.lastName != "" ){
+    if(req.body.lastName != "" && ! HelperValidator.isAscii( req.body.lastName)
+        ){
         validationResponse.addError("Invalid lastName: " + req.body.lastName);
     }
     if(! (HelperValidator.isAlphanumeric( req.body.password)
@@ -318,7 +327,8 @@ moduleRoutes.post('/updateUser', function(req, res) {
 
 //DELETE
 
-//http://localhost:8888/user/removeUser?idUser=1
+//http://localhost:8081/user/removeUser?idUser=1
+//Valide
 moduleRoutes.delete('/removeUser', function(req, res) {
     var validationResponse = commonHelper.getValidationResponse();
     var HelperValidator = commonHelper.validator;
