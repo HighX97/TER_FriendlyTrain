@@ -17,8 +17,8 @@ var ActivitySchema = new Schema({
     category: { type: Schema.Types.ObjectId, ref: 'ActivityCategory' },
     beginDate : Date,
     endDate : Date,
-    beginTime : Number, // 10h30 --> 630
-    endTime : Number, // 12h30 --> 750
+    beginTime : Number, // 10h30 --> 630 --> [0,3599]
+    endTime : Number, // 12h30 --> 750 --> [0,3599]
     organiser: { type: Schema.Types.ObjectId, ref: 'User' },
     createDate: Date,
     updateDate : Date

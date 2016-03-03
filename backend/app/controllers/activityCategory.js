@@ -68,8 +68,9 @@ moduleRoutes.post('/createActivityCategory', function(req, res) {
         ActivityCategory.findOne({ idActivityCategory: req.body.idParent
         }, function (err, activityCategoryParent) {
           if (err) throw err;
-
+          console.log("\n\n");
           console.log(activityCategoryParent);
+          console.log("\n\n");
 
           if (! activityCategoryParent && req.body.idParent > 0) {
           res.json({ success: false, message: 'Category Parent not found.' + req.body.idParent, data: [] });
@@ -136,7 +137,7 @@ moduleRoutes.get('/getActivityCategory', function(req, res) {
             //where('idUser').in(['idUser', req.query.idUser]).// like
             //limit(10).
             sort('-idActivityCategory').
-            select('idActivityCategory label idParent shortDescription level createDate updateDate lastLoginDate').
+            select('idActivityCategory label idParent shortDescription level createDate updateDate').
             exec(function(err, activityCategory) {
             if (err) throw err;
 
