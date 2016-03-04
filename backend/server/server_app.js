@@ -5,10 +5,23 @@ var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 
 var config = require('./config'); // get our config file
+
 var User   = require('../app/models/user');
 var UserController   = require('../app/controllers/user');
 
-var port = process.env.PORT || 8080;
+var ActivityCategory   = require('../app/models/activityCategory');
+var ActivityCategoryController   = require('../app/controllers/activityCategory');
+
+var Activity  = require('../app/models/activity');
+var ActivityController   = require('../app/controllers/activity');
+
+var Event  = require('../app/models/event');
+var EventController   = require('../app/controllers/event');
+
+var Publication  = require('../app/models/publication');
+var PublicationController   = require('../app/controllers/publication');
+
+var port = process.env.PORT || 8081;
 mongoose.connect(config.database); // connect to database
 //app.set('superSecret', config.secret);
 
@@ -17,6 +30,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/user', UserController);
+app.use('/activityCategory', ActivityCategoryController);
+app.use('/activity', ActivityController);
+app.use('/event', EventController);
+app.use('/publication', PublicationController);
 
 app.use(morgan('dev'));
 

@@ -9,12 +9,12 @@ var connection = mongoose.createConnection(config.database);
 autoIncrement.initialize(connection);
 
 // set up a mongoose model and pass it using module.exports
-var notificationSchema = new Schema({
-    idNotification: Number,
-    valueNotification: String,
-    createDate: Date,
-    updateDate : Date
+var soundSchema = new Schema({
+    idSound: Number,
+    labelSound: String,
+    pathSound: String,
+    createDate: Date
 });
 
-notificationSchema.plugin(autoIncrement.plugin, { model: 'notifications', field: 'idNotification' });
-var notificationModel = Model = mongoose.model('Notification', notificationSchema);
+soundSchema.plugin(autoIncrement.plugin, { model: 'sounds', field: 'idSound' });
+var soundModel = Model = mongoose.model('Sound', soundSchema);
