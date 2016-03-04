@@ -385,7 +385,7 @@ moduleRoutes.post('/updateActivity', function(req, res) {
 
 //DELETE
 
-//http://localhost:8081/user/removeActivity?idActivity=1
+//http://localhost:8081/activityCategory/removeActivity
 //
 moduleRoutes.delete('/removeActivity', function(req, res) {
   var validationResponse = commonHelper.getValidationResponse();

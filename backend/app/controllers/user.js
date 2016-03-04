@@ -305,6 +305,7 @@ moduleRoutes.post('/updateUser', function(req, res) {
                         image: req.body.image,
                         phone: req.body.phone,
                         rol: req.body.rol,
+                        creareDate: req.body.creareDate,
                         updateDate: Date()
                     }
 
