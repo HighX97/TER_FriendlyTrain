@@ -1,0 +1,81 @@
+{" idEvaluation": 1,
+"valueEvaluation": 4,
+"dateEvaluation": '42416',
+"hourEvaluation": '0,439212963',
+"placeEvaluation": 'Montpellier',
+"idUser": 1}
+,
+{" idEvaluation": 2,
+"valueEvaluation": 3,
+"dateEvaluation": '42416',
+"hourEvaluation": '0,439212963',
+"placeEvaluation": 'Montpellier',
+"idUser": 3}
+,
+{" idEvaluation": 1,
+"valueEvaluation": 5,
+"dateEvaluation": '42416',
+"hourEvaluation": '0,439212963',
+"placeEvaluation": 'Montpellier',
+"idUser": 2}
+
+
+//Remarque: pour une publication donnée, un utilisateur ne peut l'evaluer qu'une et une seule fois.
+
+{"messageComment": 'very nice place',
+"datecommentary": '40829',
+"hourcommentary": '0,5562037037',
+"place": 'ohio',
+"idUser": 1}
+,
+{"messageComment": 'very nice place',
+"datecommentary": '40829',
+"hourcommentary": '0,5562037037',
+"place": 'ohio',
+"idUser": 1}
+
+
+
+//Remarque: pour une publication donnée, un utilisateur peut la commenter plusieurs fois.
+
+
+
+
+
+***************************************************************
+//Requete d'insertion dans mongodb des collections
+
+db.publication.insert({"idPublication": 1,
+"messagePublication": 'happy new year 2016',
+"date": '42370',
+" hour": '36582',
+"placePublication": 'Paris',
+"visibility": 'public',
+"commentary" : [{"messageComment": 'very nice place',
+"datecommentary": '40829',
+"hourcommentary": '0,5562037037',
+"place": 'ohio',
+"idUser": 1},
+{"messageComment": 'very nice place',
+"datecommentary": '40829',
+"hourcommentary": '0,5562039037',
+"place": 'ohio',
+"idUser": 2}],
+"evaluation" : [{" idEvaluation": 1,
+"valueEvaluation": 4,
+"dateEvaluation": '42416',
+"hourEvaluation": '0,439212963',
+"placeEvaluation": 'Montpellier',
+"idUser": 1},
+{" idEvaluation": 2,
+"valueEvaluation": 3,
+"dateEvaluation": '42416',
+"hourEvaluation": '0,439212963',
+"placeEvaluation": 'Montpellier',
+"idUser": 3},
+{" idEvaluation": 1,
+"valueEvaluation": 5,
+"dateEvaluation": '42416',
+"hourEvaluation": '0,439212963',
+"placeEvaluation": 'Montpellier',
+"idUser": 2}]})
