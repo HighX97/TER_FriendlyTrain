@@ -10,7 +10,7 @@ var User   = require('../models/user');
 
 //Helpers:
 var commonHelper   = require('../helpers/common');
-var authenticationHelper   = require('../helpers/authentication');
+var authenticationHelper   = require('../helpers/authentification');
 
 
 // ***** Methods
@@ -133,13 +133,13 @@ moduleRoutes.post('/createUser', function(req, res) {
 //READ
 
 //Get user
-//http://localhost:8081/user/getUser?idUser=1
+//http://localhost:8081/user/getUser
 //Valide
-moduleRoutes.get('/getUser', function(req, res) {
+moduleRoutes.post('/getUser', function(req, res) {
     var validationResponse = commonHelper.getValidationResponse();
     var HelperValidator = commonHelper.validator;
 
-    if(! ( HelperValidator.isNumeric( req.query.idUser ) )  ){
+    if(! ( HelperValidator.isNumeric( req.body.idUser ) )  ){
         validationResponse.addError("User not found (" + user.idUser + ")");
     }
 
@@ -148,7 +148,7 @@ moduleRoutes.get('/getUser', function(req, res) {
     }
     else {
         User.
-            findOne({ idUser: req.query.idUser }).
+            findOne({ idUser: req.body.idUser }).
             //where('idUser').equals(req.query.idUser).// =
             //where('idUser').gt(17).lt(66).// gt - lt
             //where('idUser').in(['idUser', req.query.idUser]).// like

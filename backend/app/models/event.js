@@ -15,13 +15,14 @@ var EventSchema = new Schema({
     label: String,
     beginTime : Number,
     endTime : Number,
-    minParticipant : Number,
-    maxParticipant : Number,
-    numParticipant : Number,
+    eventDate : Date, // Between Activity.beginDate Activity.endDate
+    minParticipant : Number, //Without coachs
+    maxParticipant : Number, //Without coachs
+    numParticipant : Number, //Without coachs
     coachs : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }}],
-    participants : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }}],
+    participants : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, state : Number, date: { type: Date }}], // {0:"asked ",1:"registered"}
     publications : [ { publicationId: { type: Schema.Types.ObjectId, ref: 'Publication' }}],
-    state : Number, //// {0:"cancelled ",1:"scheduled",2:"realised"}
+    state : Number, // {0:"cancelled ",1:"scheduled",2:"realised"}
     createDate: Date,
     updateDate : Date
 });

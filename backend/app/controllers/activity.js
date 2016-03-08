@@ -94,6 +94,7 @@ moduleRoutes.get('/setupId', function(req, res) {
   });
 });
 
+
 //http://localhost:8081/activity/setup_id
 moduleRoutes.get('/setupObjId', function(req, res) {
   var category ="56d7cba9bfffb4c428caaa26";
@@ -123,6 +124,8 @@ moduleRoutes.get('/setupObjId', function(req, res) {
 
 //Create activity
 //http://localhost:8081/activity/createActivity
+//http://stackoverflow.com/questions/5619202/converting-string-to-date-in-js
+//new Date('2011-04-11')
 moduleRoutes.post('/createActivity', function(req, res) {
   var validationResponse = commonHelper.getValidationResponse();
   var HelperValidator = commonHelper.validator;
@@ -144,17 +147,19 @@ moduleRoutes.post('/createActivity', function(req, res) {
     validationResponse.addError("beginTime "+req.body.beginTime+" must be lower than endTime " + req.body.endTime);
   }
   //Check date
-  if(! (HelperValidator.isDate(req.body.beginDate) && req.body.beginDate >= Date()  ))
+  var beginDate = new Date(req.body.beginDate);
+  var endDate = new Date(req.body.endDate);
+  if(beginDate < Date())
   {
-    validationResponse.addError("Invalid  beginDate " + req.body.beginDate + " must be higher than " +Date());
+    validationResponse.addError("Invalid  beginDate " + beginDate + " must be higher than " +Date());
   }
-  if(! (HelperValidator.isDate(req.body.endDate) && req.body.beginDate >= Date() ))
+  if(endDate < Date())
   {
-    validationResponse.addError("Invalid endDate " + req.body.endDate + " must be higher than " +Date());
+    validationResponse.addError("Invalid endDate " + endDate + " must be higher than " +Date());
   }
-  if(HelperValidator.isDate(req.body.beginDate)  && HelperValidator.isDate( req.body.endDate) && req.body.beginDate > req.body.endDate  )
+  if(beginDate > endDate)
   {
-    validationResponse.addError("beginDate "+req.body.beginDate+" must be lower than endDate " + req.body.endDate);
+    validationResponse.addError("beginDate "+beginDate+" must be lower than endDate " + endDate);
   }
   //Check idCategory with undefined category
   if(! (HelperValidator.isNumeric(req.body.idCategory) ))
@@ -204,8 +209,8 @@ moduleRoutes.post('/createActivity', function(req, res) {
               shortDescription: req.body.shortDescription,
               fullDescription: req.body.fullDescription,
               category: category,
-              beginDate : req.body.beginDate,
-              endDate : req.body.endDate,
+              beginDate : beginDate,
+              endDate : endDate,
               beginTime : req.body.beginTime,
               endTime : req.body.endTime,
               organiser: organiser,
@@ -311,17 +316,17 @@ moduleRoutes.post('/updateActivity', function(req, res) {
     validationResponse.addError("beginTime "+req.body.beginTime+" must be lower than endTime " + req.body.endTime);
   }
   //Check date
-  if(! (HelperValidator.isDate(req.body.beginDate) && req.body.beginDate >= Date()  ))
+  if(! (HelperValidator.isDate(beginDate) && beginDate >= Date()  ))
   {
-    validationResponse.addError("Invalid  beginDate " + req.body.beginDate + " must be higher than " +Date());
+    validationResponse.addError("Invalid  beginDate " + beginDate + " must be higher than " +Date());
   }
-  if(! (HelperValidator.isDate(req.body.endDate) && req.body.beginDate >= Date() ))
+  if(! (HelperValidator.isDate(endDate) && beginDate >= Date() ))
   {
-    validationResponse.addError("Invalid endDate " + req.body.endDate + " must be higher than " +Date());
+    validationResponse.addError("Invalid endDate " + endDate + " must be higher than " +Date());
   }
-  if(HelperValidator.isDate(req.body.beginDate)  && HelperValidator.isDate( req.body.endDate) && req.body.beginDate > req.body.endDate  )
+  if(HelperValidator.isDate(beginDate)  && HelperValidator.isDate( endDate) && beginDate > endDate  )
   {
-    validationResponse.addError("beginDate "+req.body.beginDate+" must be lower than endDate " + req.body.endDate);
+    validationResponse.addError("beginDate "+beginDate+" must be lower than endDate " + endDate);
   }
   if(! validationResponse.success){
     res.json(validationResponse);
@@ -354,8 +359,8 @@ moduleRoutes.post('/updateActivity', function(req, res) {
               shortDescription: req.body.shortDescription,
               fullDescription: req.body.fullDescription,
               category: activityCategory,
-              beginDate : req.body.beginDate,
-              endDate : req.body.endDate,
+              beginDate : beginDate,
+              endDate : endDate,
               beginTime : req.body.beginTime,
               endTime : req.body.endTime,
               organiser: req.body.organiser,

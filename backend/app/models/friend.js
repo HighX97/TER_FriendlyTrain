@@ -11,7 +11,7 @@ autoIncrement.initialize(connection);
 // set up a mongoose model and pass it using module.exports
 
 var FriendSchema = new Schema({
-    idRelation : Number,
+    idFriend : Number,
     userA: { type: Schema.Types.ObjectId, ref: 'User' },
     userB: { type: Schema.Types.ObjectId, ref: 'User' }, //UserA != UserB
     state: Number, //0 Demande de UserA vers UserB, 1 UserA firend with UserB
