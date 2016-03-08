@@ -20,3 +20,6 @@ var commentarySchema = new Schema({
 
 commentarySchema.plugin(autoIncrement.plugin, { model: 'commentaries', field: 'idCommentary' });
 var commentaryModel = Model = mongoose.model('Commentary', commentarySchema);
+
+// ***** Exports
+module.exports = commentaryModel;
