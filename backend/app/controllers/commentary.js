@@ -185,7 +185,7 @@ moduleRoutes.post('/createCommentary', function(req, res) {
   }
 });
 
-//Get Commentary
+//getAllCommentary Commentary
 //http://localhost:8081/commentary/getAllCommentary
 //Valide
 moduleRoutes.get('/getAllCommentary', function(req, res) {
@@ -244,6 +244,116 @@ moduleRoutes.post('/getPublicationCommentary', function(req, res) {
   });
 }
 });
+
+
+
+
+
+//UPDATE
+
+//http://localhost:8081/commentary/updateCommentary
+//Valide
+
+  moduleRoutes.post('/updateCommentary', function(req, res) {
+    var validationResponse = commonHelper.getValidationResponse();
+    var HelperValidator = commonHelper.validator;
+    if(! HelperValidator.isAscii( req.body.msgCommentary )
+        && req.body.msgCommentary != "" ){
+        validationResponse.addError("Invalid msgCommentary: " + req.body.msgCommentary);
+    }
+   if(! HelperValidator.isNumeric( req.body.idCommentary)
+        && req.body.idCommentary != "" ){
+        validationResponse.addError("Invalid idCommentary: " + req.body.idCommentary);
+    }
+    if(! validationResponse.success){
+        res.json(validationResponse);
+    }
+
+    else {
+        Commentary.findOne({ idCommentary: req.body.idCommentary }).
+            exec( function(err, commentary){
+                if (err) throw err;
+
+                if (!commentary) {
+                    res.json({ success: false, message: 'Commentary not found.', data: [] });
+                }
+                else {
+
+                    var queryWhere = { idCommentary: req.body.idCommentary };
+                    var updateFields = {
+                      idCommentary: req.body.idCommentary,
+                      msgCommentary: req.body.msgCommentary,
+                      user: commentary.user,
+                      publication: commentary.publication,
+                      createDate: commentary.createDate,
+                      updateDate: Date()
+                    }
+
+                    Commentary.update(
+                        queryWhere, //query
+                        updateFields, //update
+                        function (err, raw) {
+                            if (err) return handleError(err);
+
+                            var msgResponse = 'Commentary updated successfully';
+                            console.log(msgResponse);
+                            res.json({ success: true, message: msgResponse, data: raw });
+                        });
+                }
+              });
+            }
+          });
+
+
+
+
+
+    //DELETE
+
+    //http://localhost:8081/user/removeCommentary
+    //Valide
+    moduleRoutes.delete('/removeCommentary', function(req, res) {
+        var validationResponse = commonHelper.getValidationResponse();
+        var HelperValidator = commonHelper.validator;
+        if(! HelperValidator.isNumeric( req.body.idCommentary)
+             && req.body.idCommentary != "" ){
+             validationResponse.addError("Invalid idCommentary: " + req.body.idCommentary);
+         }
+        if(! validationResponse.success){
+            res.json(validationResponse);
+        }
+        else {
+            var queryWhere = { idCommentary: req.body.idCommentary };
+            Commentary.findOne( queryWhere ).
+                //select('Commentary, msgCommentary').
+                exec( function(err, commentary){
+                    if (err) throw err;
+
+                    if (!commentary) {
+                        res.json({ success: false, message: 'Commentary not found.', data: [] });
+                    }
+                    else if (commentary) {
+                        Commentary.remove({
+                            idCommentary: req.body.idCommentary
+                        }, function(err, commentary) {
+                            if (err) throw err;
+
+                            if (!commentary) {
+                                res.json({ success: false, message: 'Error: Commentary can not deleted', data: Commentary });
+                            }
+                            else if (commentary) {
+                                res.json({
+                                    success: true,
+                                    message: 'Commentary Deleted',
+                                    data: commentary
+                                });
+                            }
+                        });
+                    }
+                });
+        }
+    });
+
 
 
 
