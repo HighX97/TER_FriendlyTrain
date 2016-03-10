@@ -1,0 +1,278 @@
+https://angular.io/docs/ts/latest/quickstart.html#!#index
+http://plnkr.co/
+
+Our QuickStart goal is to build and run a super-simple Angular 2 application in TypeScript.
+
+sample : echantillon | essayer | tester
+
+
+set up the development environment
+write the app's Angular root component
+write main.ts which tells Angular to display the root component
+write the host web page (index.html)
+
+This tsconfig.json file guides the TypeScript compiler. Learn more about it in the TypeScript Configuration chapter.
+https://angular.io/docs/ts/latest/guide/typescript-configuration.html#tsconfig
+
+Many JavaScript libraries extend the JavaScript environment with features and syntax that the TypeScript compiler doesn't recognize natively.
+We teach it about these capabilities with TypeScript type definition files — d.ts files — which we identify in a typings.json file.
+http://www.typescriptlang.org/Handbook#writing-dts-files
+
+We go a little deeper into typings in the TypeScript Configuration chapter.
+https://angular.io/docs/ts/latest/guide/typescript-configuration.html#typings
+
+
+Adding the libraries we need with npm
+
+Angular application developers rely on the npm package manager to install the libraries their apps require.
+The Angular team recommends the starter-set of packages specified in the dependencies and devDependencies sections.
+See the npm packages chapter for details.
+https://docs.npmjs.com/
+https://angular.io/docs/ts/latest/guide/npm-packages.html
+
+We execute most npm scripts in the following way: npm run + script-name. Some commands (such as start don't require the run keyword).
+
+Here's what these scripts do:
+
+    npm start - run the compiler and a server at the same time, both in "watch mode"
+
+    npm run tsc - run the TypeScript compiler once
+
+    npm run tsc:w - run the TypeScript compiler in watch mode; the process keeps running, awaiting changes to TypeScript files and re-compiling when it sees them.
+
+    npm run lite - run the lite-server, a light-weight, static file server, written and maintained by John Papa with excellent support for Angular apps that use routing.
+
+    npm run typings - runs the typings tool
+
+    npm postinstall - called by npm automatically after it successfully completes package installation. This script installs the TypeScript definition files this app requires.
+
+https://www.npmjs.com/package/lite-server
+http://johnpapa.net/
+https://angular.io/docs/ts/latest/quickstart.html#typings
+
+Scary error messages in red may appear during install. The install typically recovers from these errors and finishes successfully.
+npm errors and warnings
+
+All is well if there are no console messages starting with npm ERR! at the end of npm install. There might be a few npm WARN messages along the way — and that is perfectly fine.
+
+We often see an npm WARN message after a series of gyp ERR! messages. Ignore them. A package may try to re-compile itself using node-gyp. If the re-compile fails, the package recovers (typically with a pre-built version) and everything works.
+
+Just make sure there are no npm ERR! messages at the end of npm install.
+
+We're all set. Let's write some code.
+
+Our First Angular Component
+
+Add a component file named app.component.ts
+
+AppComponent is the root of the application
+
+Every Angular app has at least one root component, conventionally named AppComponent, that hosts the client user experience.
+
+Components are the basic building blocks of Angular applications.
+A component controls a portion of the screen — a view — through its associated template.
+
+This QuickStart has only one, extremely simple component. But it has the essential structure of every component we'll ever write:
+
+    One or more import statements to reference the things we need.
+
+    A @Component decorator that tells Angular what template to use and how to create the component.
+
+    A component class that controls the appearance and behavior of a view through its template.
+
+Import
+
+Angular apps are modular. They consist of many files each dedicated to a purpose (raison, objet, but).
+
+Angular itself is modular. It is a collection of library modules each made up of several, related features that we'll use to build our application.
+
+When we need something from a module, we import it.
+Here we import the Angular Component decorator function from the main Angular library module because we need it to define our component.
+
+#app/app.component.ts (import)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import {Component} from 'angular2/core';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@Component decorator
+
+Component is a decorator function that takes a metadata object. The metadata tell Angular how to create and use this component.
+We apply this function to the component class by prefixing the function with the @ symbol and invoking it with the metadata object just above the class:
+
+#app/app.component.ts (metadata)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@Component({
+    selector: 'my-app',
+    template: '<h1>My First Angular 2 App</h1>'
+})
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This particular metadata object has two fields, a selector and a template.
+
+The selector specifies a simple CSS selector for an HTML element that represents the component.
+
+    The element for this component is named my-app. Angular creates and displays an instance of our AppComponent wherever it encounters a my-app element in the host HTML.
+
+The template specifies the component's companion template, written in an enhanced form of HTML that tells Angular how to render this component's view.
+
+    Our template is a single line of HTML announcing "My First Angular App".
+
+    A more advanced template could contain data bindings to component properties and might identify other application components which have their own templates. These templates might identify yet other components. In this way an Angular application becomes a tree of components.
+
+Component class
+
+At the bottom of the file is an empty, do-nothing class named AppComponent.
+
+#app/app.component.ts (class)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export class AppComponent { }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When we're ready to build a substantive application, we can expand this class with properties and application logic.
+Our AppComponent class is empty because we don't need it to do anything in this QuickStart.
+
+We export AppComponent so that we can import it elsewhere in our application, as we'll see when we create main.ts.
+
+Show it with main.ts
+
+Now we need something to tell Angular to load the root component
+
+Add a new file , main.ts, to the app/ folder as follows:
+#app/main.ts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import {bootstrap}    from 'angular2/platform/browser'
+import {AppComponent} from './app.component'
+
+bootstrap(AppComponent);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We import the two things we need to launch the application:
+
+    Angular's browser bootstrap function
+    The application root component, AppComponent.
+
+Then we call bootstrap with AppComponent.
+Bootstrapping is platform-specific
+
+Notice that we import the bootstrap function from angular2/platform/browser, not angular2/core.
+
+Bootstrapping isn't core because there isn't a single way to bootstrap the app. True, most applications that run in a browser call the bootstrap function from this library.
+
+But it is possible to load a component in a different environment. We might load it on a mobile device with Apache Cordova or NativeScript.
+https://cordova.apache.org/
+https://www.nativescript.org/
+We might wish to render the first page of our application on the server to improve launch performance or facilitate SEO.
+http://static.googleusercontent.com/media/www.google.com/en//webmasters/docs/search-engine-optimization-starter-guide.pdf
+
+These targets require a different kind of bootstrap function that we'd import from a different library.
+
+Why create a separate main.ts file?
+
+The main.ts file is tiny. This is just a QuickStart. We could have folded its few lines into the app.component file and spared ourselves some complexity.
+
+We'd rather demonstrate the proper way to structure an Angular application.
+App bootstrapping is a separate concern from presenting a view.
+Mixing concerns creates difficulties down the road.
+We might launch the AppComponent in multiple environments with different bootstrappers.
+Testing the component is much easier if it doesn't also try to run the entire application.
+Let's make the small extra effort to do it the right way.
+
+Add the index.html
+
+The index.html is the web page that hosts the application
+There are three noteworthy sections of HTML
+
+    The JavaScript libraries
+
+    Configuration of SystemJS where we also import and run the main file that we just wrote.
+
+    The <my-app> tag in the <body> which is where our app lives!
+
+#index.html
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<!-- IE required polyfills, in this exact order -->
+<script src="node_modules/es6-shim/es6-shim.min.js"></script>
+<script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+<script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+
+<script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+<script src="node_modules/systemjs/dist/system.src.js"></script>
+<script src="node_modules/rxjs/bundles/Rx.js"></script>
+<script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We began with Internet Explorer polyfills. IE requires polyfills to run an application that relies on ES2015 promises and dynamic module loading. Most applications need those capabilities and most applications should run in Internet Explorer.
+
+Next are the polyfills for Angular2, angular2-polyfills.js.
+
+Then the SystemJS library for module loading, followed by the Reactive Extensions RxJS library.
+
+Our QuickStart doesn't use the Reactive Extensions but any substantial application will want them when working with observables. We added the library here in QuickStart so we don't forget later.
+
+Finally, we loaded the web development version of Angular 2 itself.
+
+We'll make different choices as we gain experience and become more concerned about production qualities such as load times and memory footprint.
+
+
+SystemJS Configuration
+
+The QuickStart uses SystemJS to load application and library modules.
+There are alternatives that work just fine including the well-regarded webpack.
+https://webpack.github.io/
+SystemJS happens to be a good choice but we want to be clear that it was a choice and not a preference.
+
+All module loaders require configuration and all loader configuration becomes complicated rather quickly as soon as the file structure diversifies and we start thinking about building for production and performance.
+
+We suggest becoming well-versed in the loader of your choice.
+Learn more about SystemJS configuration here.
+https://github.com/systemjs/systemjs/blob/master/docs/config-api.md
+
+With those cautions in mind, what are we doing in this QuickStart configuration?
+
+#index.html (System configuration)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<script>
+  System.config({
+    packages: {
+      app: {
+        format: 'register',
+        defaultExtension: 'js'
+      }
+    }
+  });
+  System.import('app/main')
+        .then(null, console.error.bind(console));
+</script>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The packages node tells SystemJS what to do when it sees a request for a module from the app/ folder.
+
+Our QuickStart makes such requests when one of its application TypeScript files has an import statement like this:
+#main.ts (excerpt)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import {AppComponent} from './app.component'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Notice that the module name (after from) does not mention a filename extension.
+The packages: configuration tells SystemJS to default the extension to 'js', a JavaScript file.
+
+That makes sense because we transpile TypeScript to JavaScript before running the application.
+Transpiling in the browser
+
+In the live example on plunker we transpile (AKA compile) to JavaScript in the browser on the fly. That's fine for a demo. That's not our preference for development or production.
+
+We recommend transpiling (AKA compiling) to JavaScript during a build phase before running the application for several reasons including:
+
+    We see compiler warnings and errors that are hidden from us in the browser.
+
+    Pre-compilation simpifies the module loading process and it's much easier to diagnose problems when this is a separate, external step.
+
+    Pre-compilation means a faster user experience because the browser doesn't waste time compiling.
+
+    We iterate development faster because we only re-compile changed files. We notice the difference as soon as the app grows beyond a handful of files.
+
+    Pre-compilation fits into a continuous integration process of build, test, deploy.
+
+The System.import call tells SystemJS to import the main file (main.js ... after transpiling main.ts, remember?). main is where we tell Angular to launch the application. We also catch and log launch errors to the console.
+
+All other modules are loaded upon request either by an import statement or by Angular itself.
+<my-app>
+
+When Angular calls the bootstrap function in main.ts, it reads the AppComponent metadata, finds the my-app selector, locates an element tag named my-app, and loads our application between those tags.

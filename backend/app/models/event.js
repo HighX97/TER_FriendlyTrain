@@ -18,9 +18,10 @@ var EventSchema = new Schema({
     eventDate : Date, // Between Activity.beginDate Activity.endDate
     minParticipant : Number, //Without coachs
     maxParticipant : Number, //Without coachs
-    numParticipant : Number, //Without coachs
+    //numParticipant : Number, //Without coachs
+    activityManager : { type: Schema.Types.ObjectId, ref: 'User' },
     coachs : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }}],
-    participants : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, state : Number, date: { type: Date }}], // {0:"asked ",1:"registered"}
+    participants : [ { userId: { type: Schema.Types.ObjectId, ref: 'User' }, date: { type: Date }}], // {0:"asked ",1:"registered"}
     publications : [ { publicationId: { type: Schema.Types.ObjectId, ref: 'Publication' }}],
     state : Number, // {0:"cancelled ",1:"scheduled",2:"realised"}
     createDate: Date,

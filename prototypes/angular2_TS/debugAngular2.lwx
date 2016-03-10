@@ -1,0 +1,32 @@
+http://stackoverflow.com/questions/24234595/contextify-install-fails-node-not-found
+
+
+
+https://docs.npmjs.com/cli/link
+
+
+export NODE_PATH=/usr/local/lib/node_modules
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo npm install tsc
+sudo npm install tsc:w
+sudo npm install lite
+sudo npm install typings
+sudo npm install -g typings &
+sudo npm install -g tsd
+sudo npm install -g typescript
+
+sudo npm start
+sudo npm run tsc
+sudo npm run tsc:w
+sudo npm run lite
+sudo npm run typings
+sudo npm postinstall
+
+https://github.com/angular/angular/issues/6097
+https://github.com/johnpapa/angular2-go/issues/1
+
+
+lowx@Sky-P552LJ:~/Documents/Professionnel/Etude/Master_AIGLE/M1/TER/TER_FriendlyTrain/prototypes/angular2_TS/Angular2_Tuto/angular2-quickstart_ts$ node -v
+v0.10.25
+lowx@Sky-P552LJ:~/Documents/Professionnel/Etude/Master_AIGLE/M1/TER/TER_FriendlyTrain/prototypes/angular2_TS/Angular2_Tuto/angular2-quickstart_ts$ npm -v
+1.3.10

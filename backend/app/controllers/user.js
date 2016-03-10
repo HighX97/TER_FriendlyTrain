@@ -97,7 +97,7 @@ moduleRoutes.post('/createUser', function(req, res) {
             select('idUser, email').
             exec( function(err, user){
                 if (err) throw err;
-
+                var encryptedPassword = authenticationHelper.encrypt(req.body.password);
                 if (!user){
                     //Email no
                     var dataUser = new User({
@@ -105,7 +105,7 @@ moduleRoutes.post('/createUser', function(req, res) {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         email: email,
-                        password: req.body.password,
+                        password: encryptedPassword,
                         address: req.body.address,
                         //image: req.body.image,
                         phone: req.body.phone,
@@ -292,15 +292,16 @@ moduleRoutes.post('/updateUser', function(req, res) {
                 if (!user) {
                     res.json({ success: false, message: 'User not found.', data: [] });
                 }
-                else if (user) {
-
+                else if (user)
+                {
+                    var encryptedPassword = authenticationHelper.encrypt(req.body.password);
                     var queryWhere = { idUser: req.body.idUser };
                     var updateFields = {
                         idUser: req.body.idUser,
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         email: email,
-                        password: req.body.password,
+                        password: encryptedPassword,
                         address: req.body.address,
                         image: req.body.image,
                         phone: req.body.phone,
