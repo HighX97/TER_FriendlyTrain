@@ -1,0 +1,10 @@
+<div *ngIf="publication">
+  <h2>{{publication.idPublication}} details!</h2>
+  <div>
+    <label>id: </label>{{publication.idPublication}}</div>
+  <div>
+    <label>msgPublication: </label>
+    <input [(ngModel)]="publication.msgPublication" placeholder="msgPublication" />
+  </div>
+  <button (click)="goBack()">Back</button>
+</div>

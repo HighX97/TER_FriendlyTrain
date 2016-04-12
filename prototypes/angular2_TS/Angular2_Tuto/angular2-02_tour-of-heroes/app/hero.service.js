@@ -1,20 +1,3 @@
-/*
-import {Hero} from './hero';
-import {HEROES} from './mock-heroes';
-import {Injectable} from 'angular2/core';
-@Injectable()
-export class HeroService {
-  getHeroes() {
-    return Promise.resolve(HEROES);
-  }
-  // See the "Take it slow" appendix
-  getHeroesSlowly() {
-    return new Promise<Hero[]>(resolve =>
-      setTimeout(()=>resolve(HEROES), 2000) // 2 seconds
-    );
-  }
-}
-*/
 System.register(['./mock-heroes', 'angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -65,4 +48,21 @@ System.register(['./mock-heroes', 'angular2/core'], function(exports_1, context_
         }
     }
 });
+/*
+import {Hero} from './hero';
+import {HEROES} from './mock-heroes';
+import {Injectable} from 'angular2/core';
+@Injectable()
+export class HeroService {
+  getHeroes() {
+    return Promise.resolve(HEROES);
+  }
+  // See the "Take it slow" appendix
+  getHeroesSlowly() {
+    return new Promise<Hero[]>(resolve =>
+      setTimeout(()=>resolve(HEROES), 2000) // 2 seconds
+    );
+  }
+}
+*/
 //# sourceMappingURL=hero.service.js.map

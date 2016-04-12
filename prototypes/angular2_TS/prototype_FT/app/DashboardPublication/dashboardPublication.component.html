@@ -1,0 +1,57 @@
+<h3>Top Publications</h3>
+<div class="grid grid-pad">
+  <div *ngFor="#publication of publications" (click)="gotoDetail(publication)" class="col-1-1" >
+    <div class="module publication">
+      <!-- -->
+      <div class="panel panel-default ">
+        <!-- -->
+        <div class="panel-heading" role="tab" id="headingPublicationMsg" data-toggle="collapse" data-parent="#accordion" data-target="#collapsePublicationMsg" aria-expanded="false" aria-controls="collapsePublicationMsg">
+          <h4 class="panel-title">
+            <a class="accordion-toggle">
+              <h3 class="heading">Titre publication : {{publication.idPublication}}</h3>
+            </a>
+          </h4>
+        </div>
+          <!-- -->
+        <div id="collapsePublicationMsg" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPublicationMsg">
+          <div class="panel-body">
+            <p class="fh5co-category">{{publication.msgPublication}}</p>
+          </div>
+        </div>
+        <!-- -->
+        <div class="panel-heading" role="tab" id="headingPublicationUser" data-toggle="collapse" data-parent="#accordion" data-target="#collapsePublicationUser" aria-expanded="false" aria-controls="collapsePublicationUser">
+          <h4 class="panel-title">
+            <a class="accordion-toggle">
+              <h3 class="heading">{{publication.user}}</h3>
+            </a>
+          </h4>
+        </div>
+        <!-- -->
+        <div id="collapsePublicationUser" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPublicationUser">
+          <div class="panel-body">
+            <p class="fh5co-category">{{publication.user}}</p>
+          </div>
+        </div>
+        <!-- -->
+        <div class="panel-heading" role="tab" id="headingPublicationDate" data-toggle="collapse" data-parent="#accordion" data-target="#collapsePublicationDate" aria-expanded="false" aria-controls="collapsePublicationDate">
+          <h4 class="panel-title">
+            <a class="accordion-toggle">
+              <h3 class="heading">{{publication.createDate}}</h3>
+            </a>
+          </h4>
+        </div>
+        <div id="collapsePublicationDate" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPublicationDate">
+          <div class="panel-body">
+            <p class="fh5co-category">{{publication.updateDate}}</p>
+          </div>
+        </div>
+        <!-- -->
+      </div>
+      <!-- -->
+
+      <!-- -->
+    </div>
+    <div class="col-md-12 animate-box">
+    </div>
+  </div>
+</div>

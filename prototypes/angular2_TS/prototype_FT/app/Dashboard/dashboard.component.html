@@ -1,0 +1,13 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+  <div *ngFor="#hero of heroes" (click)="gotoDetail(hero)" class="col-1-4" >
+    <div class="module hero">
+        <figure>
+          <a href="#">
+            <img src="app/Dashboard/hero-307036_640.png" alt="Smiley face" height="42" width="42">
+          </a>
+        </figure>
+        <p class="fh5co-category">{{hero.name}}</p><h3 class="heading">{{hero.id}}</h3>
+    </div>
+  </div>
+</div>

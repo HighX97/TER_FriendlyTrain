@@ -1,0 +1,14 @@
+<h2>My Publications</h2>
+<ul class="publications">
+  <li *ngFor="#publication of publications"
+    [class.selected]="publication === selectedPublication"
+    (click)="onSelect(publication)">
+    <span class="badge">{{publication.id}}</span> {{publication.msgPublication}}
+  </li>
+</ul>
+<div *ngIf="selectedPublication">
+  <h2>
+    {{selectedPublication.msgPublication | uppercase}} is my publication
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>

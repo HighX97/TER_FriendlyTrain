@@ -233,7 +233,8 @@ moduleRoutes.get('/getAllUsers', function(req, res) {
     sort('-idCategory').
     select('idUser firstName lastName email password address image phone rol createDate updateDate lastLoginDate').
     exec(function(err, Users) {
-        res.json({ success: true, message: 'User List:', data: Users });
+        res.header("Access-Control-Allow-Origin", "*");
+        res.json(Users);
     });
 });
 
